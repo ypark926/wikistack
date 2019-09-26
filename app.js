@@ -12,7 +12,7 @@ app.use("/user", require("./routes/user"));
 app.use("/wiki", require("./routes/wiki"));
 
 app.get('/', function (req, res) {
-  res.send(layout("hello world"));
+  res.redirect("/wiki");;
 });
 
 const PORT = 3000;
