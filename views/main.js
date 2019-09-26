@@ -9,8 +9,10 @@ module.exports = (pages) => layout(html`
     <button type="submit">Search</button>
   </form>
   <hr>
+  ${pages.map(page => html`
   <ul class="list-unstyled">
     <ul>
-      <!-- PLACEHOLDER LIST OF PAGES -->
-    </ul>
+    <a href="/posts/${page.slug}">${page.title}</a>
+    </ul>`
+    )}
   </ul>`);

@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const addPage = require("../views/addPage");
 const { Page } = require("../models");
-const wikipage = require("../views/wikipage")
-
+const wikipage = require("../views/wikipage");
+const main = require("../views/main");
 
 router.get("/", (req, res) => {
-  res.send('got to GET /wiki/')
+  const findPages = Page.findAll({attributes: ['title']});
+  res.send(main(findPages));
 });
 
 router.post("/", async (req, res, next) => {
@@ -34,9 +35,14 @@ router.post("/:slug", async (req, res, next) => {
 });
 
 router.get("/:slug", async (req, res, next) => {
-  const findWikiTitle = await Page.findOne({where:{slug:req.params.slug}});
-  console.log(findWikiTitle)
-  res.send(wikipage(findWikiTitle));
+  try {
+    const findWikiTitle = await Page.findOne({where:{slug:req.params.slug}});
+    console.log(findWikiTitle)
+    res.send(wikipage(findWikiTitle));
+  }
+  catch(error) {
+    next(error);
+  }
 });
 
 
