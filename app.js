@@ -8,6 +8,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(morgan("dev"));
 app.use(express.static(__dirname + '/public'));
+app.use("/user", require("./routes/user"));
+app.use("/wiki", require("./routes/wiki"));
 
 app.get('/', function (req, res) {
   res.send(layout("hello world"));
