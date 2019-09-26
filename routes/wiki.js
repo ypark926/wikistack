@@ -17,6 +17,7 @@ router.post("/", async (req, res, next) => {
   });
   try {
     await page.save();
+    // console.log(page);
     res.redirect('/');
   } catch (error) {next(error)}
 });
@@ -25,7 +26,11 @@ router.get("/add", (req, res) => {
   res.send(addPage());
 });
 
-const slug = (title) => {
-  return title.replace(/\s+/g, '_').replace(/\W/g, '')
-}
+router.post("/:slug", async (req, res, next) => {
+  const [slug] = await page.update(req.body, {where: {slug: req.params.slug},returning: true});
+  console.log(slug);
+  res.redirect(`/wiki/${req.params.slug}`);
+})
+
+
 module.exports = router;
